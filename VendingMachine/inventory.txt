@@ -1,0 +1,4 @@
+Snickers::1.00::4
+Reeses::1.00::4
+Cheetos::1.00::4
+Lays::1.00::4
