@@ -1,18 +1,20 @@
 package vendingmachine.ui;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import vendingmachine.dto.Item;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Component
 public class VendingMachineView {
 
     //di
     private UserIO io;
-
+    @Autowired
     public VendingMachineView(UserIO io) {
         this.io = io;
     }

@@ -1,4 +1,4 @@
-package vendingmachine.service;
+package vendingmachine.dao.service;
 
 public class NoItemInventoryException extends Exception {
     

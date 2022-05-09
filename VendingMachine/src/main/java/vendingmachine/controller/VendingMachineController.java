@@ -1,26 +1,26 @@
 package vendingmachine.controller;
 
-import vendingmachine.dao.VendingMachineDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import vendingmachine.dao.VendingMachinePersistenceException;
+import vendingmachine.dao.service.VendingMachineServiceLayerImpl;
 import vendingmachine.dto.Item;
-import vendingmachine.service.InsufficientFundsException;
-import vendingmachine.service.NoItemInventoryException;
-import vendingmachine.service.VendingMachineServiceLayer;
+import vendingmachine.dao.service.InsufficientFundsException;
+import vendingmachine.dao.service.NoItemInventoryException;
 import vendingmachine.ui.UserIO;
 import vendingmachine.ui.UserIOConsoleImpl;
 import vendingmachine.ui.VendingMachineView;
-import vendingmachine.service.VendingMachineServiceLayerImpl;
 import java.math.BigDecimal;
 import java.util.List;
-
+@Component
 public class VendingMachineController {
 
     private UserIO io = new UserIOConsoleImpl();
     //di
     private VendingMachineView view;
-    private VendingMachineServiceLayer service;
-
-    public VendingMachineController(VendingMachineServiceLayer service, VendingMachineView view) {
+    private VendingMachineServiceLayerImpl service;
+    @Autowired
+    public VendingMachineController(VendingMachineServiceLayerImpl service, VendingMachineView view) {
         this.service = service;
         this.view = view;
     }

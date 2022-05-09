@@ -1,5 +1,5 @@
 
-package vendingmachine.service;
+package vendingmachine.dao.service;
 
 
 public class InsufficientFundsException extends Exception {

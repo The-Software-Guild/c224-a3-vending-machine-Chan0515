@@ -1,6 +1,8 @@
 
-package vendingmachine.service;
+package vendingmachine.dao.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import vendingmachine.dao.VendingMachineAuditDao;
 import vendingmachine.dao.VendingMachineDao;
 import vendingmachine.dao.VendingMachinePersistenceException;
@@ -9,18 +11,18 @@ import vendingmachine.dto.Item;
 import java.math.BigDecimal;
 import java.util.List;
 
-
+@Component
 public class VendingMachineServiceLayerImpl implements VendingMachineServiceLayer {
 
     private VendingMachineAuditDao auditDao;
     private VendingMachineDao dao;
-    
+    @Autowired
     public VendingMachineServiceLayerImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao) {
         this.dao = dao;
         this.auditDao = auditDao;
     }
 
-    private void hasEnoughMoney(Item item) throws InsufficientFundsException, VendingMachinePersistenceException, VendingMachinePersistenceException {
+    private void hasEnoughMoney(Item item) throws InsufficientFundsException, VendingMachinePersistenceException {
         BigDecimal temp = new BigDecimal(item.getPrice());
         if (dao.getTotal().compareTo(temp) < 0) {
             throw new InsufficientFundsException("INSUFFICIENT FUNDS");
@@ -47,8 +49,6 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         if (dao.getItemList().isEmpty()) {
             throw new NoItemInventoryException("VENDING MACHINE EMPTY");
         }
-        
-        BigDecimal temp = new BigDecimal(item.getPrice());
 
         hasEnoughMoney(item);
         return dao.vendItem(item);

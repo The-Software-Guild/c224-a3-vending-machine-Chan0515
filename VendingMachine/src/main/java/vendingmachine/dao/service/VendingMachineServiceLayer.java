@@ -1,5 +1,5 @@
 
-package vendingmachine.service;
+package vendingmachine.dao.service;
 
 import vendingmachine.dao.VendingMachinePersistenceException;
 import vendingmachine.dto.Item;

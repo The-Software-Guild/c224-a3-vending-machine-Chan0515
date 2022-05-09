@@ -1,5 +1,6 @@
 package vendingmachine.dao;
 
+import org.springframework.stereotype.Component;
 import vendingmachine.dto.Item;
 
 import java.io.*;
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
+@Component
 public class VendingMachineDaoImpl implements VendingMachineDao {
 
     enum CoinType {
@@ -30,7 +32,6 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
     @Override
     public BigDecimal addCoin(String coinType, int amount) {
         this.coinType = this.coinType.valueOf(coinType);
-        int value = 0;
         switch(this.coinType) {
             case PENNY:
                 total = total.add(new BigDecimal(1*amount));
@@ -57,14 +58,12 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
         return convertedTotal;
     }
 
-    //sl
     @Override
     public List<Item> getItemList() throws VendingMachinePersistenceException {
         loadInventory();
         return new ArrayList(itemList.values());
     }
 
-    //sl
     @Override
     public Item vendItem(Item item) throws VendingMachinePersistenceException {
         loadInventory();
@@ -72,12 +71,11 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
             throw new VendingMachinePersistenceException("VENDING MACHINE EMPTY");
         }
 
-        Item removedItem = itemList.remove(item.getName()); //remove item
+        Item removedItem = itemList.remove(item.getName());
         BigDecimal temp = new BigDecimal(removedItem.getPrice());
 
         if (temp.compareTo(getTotal()) > 0) {
-            itemList.put(item.getName(), removedItem); //put back
-
+            itemList.put(item.getName(), removedItem);
         }
         else {
             int amount = Integer.parseInt(removedItem.getAmount()) -1;
@@ -148,7 +146,7 @@ public class VendingMachineDaoImpl implements VendingMachineDao {
                     new BufferedReader(
                             new FileReader(INVENTORY_FILE)));
         } catch (FileNotFoundException e) {
-            throw new VendingMachinePersistenceException("-_- Could not load inventory data into memory.", e);
+            throw new VendingMachinePersistenceException("Could not load inventory data into memory.", e);
         }
 
         String currentLine;
